@@ -1,7 +1,5 @@
 package summary_ranges
 
-import kotlin.math.sign
-
 fun summaryRanges(nums: IntArray): List<String> {
 
     if (nums.isEmpty()) return listOf()
@@ -9,22 +7,17 @@ fun summaryRanges(nums: IntArray): List<String> {
     var ranges = mutableListOf<String>()
     var startRange = nums[0]
 
-    for (i in 1 until nums.size) {
-        if (nums[i] != nums[i - 1] + 1) {
-            var endRange = nums[i - 1]
-            if (startRange == endRange) {
+    for (i in 0 until nums.size) {
+        if (i == nums.size - 1 || nums[i] + 1 != nums[i + 1]) {
+            if (startRange == nums[i]) {
                 ranges.add("$startRange")
             } else {
-                ranges.add("$startRange->$endRange")
+                ranges.add("$startRange->${nums[i]}")
             }
-            startRange = nums[i]
+            if (i != nums.size - 1) {
+                startRange = nums[i + 1]
+            }
         }
-    }
-    var endRange = nums[nums.size - 1]
-    if (startRange == endRange) {
-        ranges.add("$startRange")
-    } else {
-        ranges.add("$startRange->$endRange")
     }
     return ranges
 }
